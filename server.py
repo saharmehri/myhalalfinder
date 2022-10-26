@@ -9,7 +9,7 @@ app.jinja_env.undefined = StrictUndefined
 
 
 # Homepage
-@app.route('/')
+@app.route('/homepage')
 def homepage():
     """View homepage"""
 
