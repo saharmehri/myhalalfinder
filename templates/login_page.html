@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block head %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<link rel="stylesheet" href="/static/css/homepage.css">
+{% endblock %}
+
+{% block body %}
+
+
+
+<div class="sidenav">
+         <div class="login-main-text">
+            <h2>Login</h2><br>
+            <p>Find halal restaurants near you.</p><br><br><br>
+            <p>By continuing, you agree to our terms and conditions.</p>
+         </div>
+      </div>
+      <div class="main">
+         <div class="col-md-6 col-sm-12">
+            <div class="create-login-form">
+               <form action="/login" method="POST">
+                  <div class="form-group">
+                     <label>Email</label>
+                     <input type="text" class="form-control" name= "email" placeholder="Email">
+                  </div>
+                  <div class="form-group">
+                     <label>Password</label>
+                     <input type="password" class="form-control" name= "password" placeholder="Password">
+                  </div>
+                  <!-- MAY NOT NEED THIS INFORMATION IF DISPLAY NAME IS SAVED ALREADY! -->
+                  <!-- <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" name= "display-name" placeholder="Username">
+                 </div> -->
+                  <button type="submit" class="btn btn-black">Log in</button>
+                  <!-- <button type="submit" class="btn btn-secondary">Register</button> -->
+               </form>
+            </div>
+         </div>
+      </div>
+{% endblock %}
