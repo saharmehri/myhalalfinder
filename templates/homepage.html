@@ -1,16 +1,39 @@
 {% extends 'base.html' %}
-{% block title %}Homepage{% endblock %}
+{% block title %}Homepage-My Halal Finder{% endblock %}
 
 {% block body %}
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">My Halal Finder</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
+          <a class="nav-link" href="/foodfinder">Find Me Halal Food</a>
+          <a class="nav-link" href="/create_login">Create a Login</a>
+          <a class="nav-link" href="/loginpage">Login</a>
+          <!-- to add more tabs on navbar just use below as skeleton -->
+          <!-- <a class="nav-link disabled">Disabled</a> -->
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <h1>Welcome to My Halal Finder</h1>
+</body>
 
-<h1>Welcome to My Halal Finder</h1>
 
-<h2>Navigation</h2>
+
+
+<!-- <h2>Navigation</h2>
 <ul>
     <li><a href="/halal_restaurants">Find Me Halal Food</a></li>
     <li><a href="/create_login">Create a Login</a></li>
     <li><a href="/login">Login</a></li>
-</ul>
+</ul> -->
 
 {% endblock %}
 

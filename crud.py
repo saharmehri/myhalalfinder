@@ -11,6 +11,11 @@ def create_user(email, password, display_name):
 
     return user
 
+def get_user_by_email(email):
+    """Return a user by email."""
+
+    return User.query.filter(User.email == email).first()
+
 # Rating functions start here:
 
 def create_rating(score, user_id, unique_restaurant_id):
@@ -38,6 +43,12 @@ def create_restaurant(unique_restaurant_id, name, address, phone_number, rest_ph
     restaurant = Restaurant(unique_restaurant_id=unique_restaurant_id, name=name, address=address, phone_number=phone_number, rest_photo=rest_photo)
 
     return restaurant
+
+def get_restaurants():
+    """Return movies based on user preference."""
+
+    # Make sure the right query for all restaurants that the API returned 
+    return Restaurant.query.all()
 
 
 
