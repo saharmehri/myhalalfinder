@@ -29,31 +29,32 @@
 
     <div class="container">
         <h1>What are you eating?</h1><br>
-        <h1>Search for halal restaurants near you</h1><br>
+        <h1>Search for halal restaurants near you!</h1><br>
 
         <form class="row g-3" method="GET" action="/foodfinder/search">
             <div class="col-12">
-                <label for="inputCuisine" class="form-label">Cuisine</label>
-                <input type="text" name="cuisine" class="form-control" id="inputCuisine" placeholder="Afghan, Hot Pot, Tacos, etc.">
+                <label for="inputCuisine" class="form-label">Cuisine:</label>
+                <input type="text" required="true" name="cuisine" class="form-control" id="inputCuisine" placeholder="Afghan, Hot Pot, Tacos, etc.">
             </div>
             <div class="col-md-6">
-                <label for="inputLocation" class="form-label">Location</label>
-                <input type="text" name="location" class="form-control" id="inputLocation" placeholder="San Francisco, NYC, 336 O'Farrell St, San Francisco, CA 94102">
+                <label for="inputLocation" class="form-label">Location:</label>
+                <input type="text" required="true" name="location" class="form-control" id="inputLocation" placeholder="San Francisco, NYC, 336 O'Farrell St, San Francisco, CA 94102">
             </div>
             <div class="col-md-6"><br>
                 Distance: <br>
-                <input type="radio" name="radius" value="10 miles" id="ten-miles">
+                <input type="radio" required="true" name="radius" value="5" id="fifty-miles">
+                <label for="50 miles">5 miles</label>
+                 
+                <input type="radio" required="true" name="radius" value="10" id="ten-miles">
                 <label for="10 miles">10 miles</label>
               
-                <input type="radio" name="radius" value="15 miles" id="fifteen-miles">
+                <input type="radio" required="true" name="radius" value="15" id="fifteen-miles">
                 <label for="15 miles">15 miles</label>
                 
-                <input type="radio" name="radius" value="25 miles" id="twenty-five-miles">
+                <input type="radio" name="radius" value="25" id="twenty-five-miles">
                 <label for="25 miles">25 miles</label>
                
-                <input type="radio" name="radius" value="50 miles" id="fifty-miles">
-                <label for="50 miles">50 miles</label>
-                 </div>
+            </div>    
             
              <div class="col-12">
                 <button type="submit" class="btn btn-primary">Search</button>

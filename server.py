@@ -4,6 +4,10 @@ import crud
 from jinja2 import StrictUndefined
 import os
 import requests
+import urllib
+import math
+
+from urllib.parse import quote
 
 app = Flask(__name__)
 app.secret_key = os.environ['RANDOM_SECRET_KEY']
@@ -34,6 +38,55 @@ def show_halal_food_finder_form():
 @app.route('/foodfinder/search')
 def find_halal_food():
     """Search for halal food on Yelp"""
+
+    # Request user input from form
+    cuisine = request.args.get('cuisine')
+    location = request.args.get('location')
+    radius = request.args.get('radius')
+    radius = int(radius) * 1609.34 # Converting miles to meters
+    radius = math.floor(radius)
+
+    # Setting payload to the values the user inputed to filter search results. Halal is a fixed parameter.
+    payload = {'categories': ['halal', 'Halal'],
+        'cuisine': cuisine.replace(' ', '+'),
+        'location': location.replace(' ', '+'), 
+        'radius': radius
+        }
+
+    # API key access to allow me to run API calls on Yelp
+    url = '{0}{1}'.format('https://api.yelp.com', quote('/v3/businesses/search'.encode('utf8')))
+    headers = {
+        'Authorization': 'Bearer %s' % API_KEY,
+    }
+
+    # Make a get request to GET the information in the params and attach to URL as a query string and save to `response`
+    # When call `response` in interactive mode...Should get a `<Response [200]>` message meaning "successful request"! 
+    response = requests.request('GET', url, headers=headers, params=payload)
+    # Convert response to `.json`
+    # # `.json` will parse any JSON contained in the response and return it as a Python dictionary
+    response = response.json()
+
+    print(response)
+
+    # if cuisine:
+    #     payload["cuisine"] = cuisine
+
+    # if location:
+    #     payload["location"] = location
+
+    # if radius:
+    #     payload["radius"] = radius
+
+   
+
+    # events = data['_embedded']['events']
+    
+    # Send information to new page (HTML) to view results.
+    return render_template('homepage.html',
+                          data=response)
+
+
+
 
 
 
