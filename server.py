@@ -66,29 +66,35 @@ def find_halal_food():
     # # `.json` will parse any JSON contained in the response and return it as a Python dictionary
     response = response.json()
 
-    print(response)
-
-    # if cuisine:
-    #     payload["cuisine"] = cuisine
-
-    # if location:
-    #     payload["location"] = location
-
-    # if radius:
-    #     payload["radius"] = radius
-
-   
-
-    # events = data['_embedded']['events']
+    # To send ALL information use:
+    businesses = response['businesses']
+    # Don't forget to change the return output so that it sends the businesses result 
+    
+    # Looping through .json file and getting pertinent information (key:value) pairs
+    # for rest in response['businesses']:
+    #     for key,value in rest.items():
+    #         if key == 'id':
+    #             unique_restaurant_id = value
+    #         if key == 'name':
+    #             name = value
+    #         # Tried looping through location to get the display_address but kept getting error
+    #         # if key == 'location':
+    #         #     # loop through location to get display address
+    #         #     for key,value in key.items():
+    #         #         address = key['locations']['display_address']
+    #         if key == 'dispay_phone':
+    #             phone_number = value
+    #         if key == 'image_url':
+    #             rest_photo = value
+    #         # Attemoted this way instead of line 81, but then getting UnboundLocalError: local variable 'phone_number' referenced before assignment
+    #         address = rest['location']['display_address']
     
     # Send information to new page (HTML) to view results.
-    return render_template('homepage.html',
-                          data=response)
+    return render_template('search-results.html', businesses = businesses, results = response)
 
-
-
-
-
+    # ONLY USE IF GOING ABOUT LINE 73
+    # return render_template('homepage.html',
+    #                       unique_restaurant_id = unique_restaurant_id, name = name, address = address, phone_number = phone_number, rest_photo = rest_photo)
 
 
 # Related to creating login
@@ -163,3 +169,22 @@ def user_login():
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)
+
+
+
+
+
+
+
+# USE WHEN TRYING TO NEST THROUGH businesses DICTIONARY 
+    # print(response) -> see what the .json file holds
+    # print(response.keys()) -> see the keys within the response data
+    # print('********' *10) -> helpdul divider 
+# for rest in response['businesses']:
+#         for key,value in rest.items():
+#             if rest.keys() == 'id':
+#                 unique_restaurant_id = rest['id']
+#             elif rest.keys() == 'name':
+#                 name = rest['name']
+#             elif rest.keys() == ''
+#             print(key,value)
