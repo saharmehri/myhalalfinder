@@ -3,45 +3,83 @@
 {% block title %}Login{% endblock %}
 
 {% block head %}
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-<link rel="stylesheet" href="/static/css/homepage.css">
+   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <!------ Include the above in your HEAD tag ---------->
+   <link rel="stylesheet" href="/static/css/homepage.css">
 {% endblock %}
 
 {% block body %}
+<a id="home-submit" href="/homepage">Home</a>
 
+<div class="login-reg-panel">
+		
+      <div class="login-info-box">
+			<h2>Have an account?</h2>
+			<p>Log in here!</p>
+			<label id="label-register" for="log-reg-show">Login</label>
+			<input type="radio" name="active-log-panel" id="log-reg-show"  checked="checked">
+		</div>
 
-
-<div class="sidenav">
-         <div class="login-main-text">
-            <h2>Login</h2><br>
-            <p>Find halal restaurants near you.</p><br><br><br>
-            <p>By continuing, you agree to our terms and conditions.</p>
-         </div>
-      </div>
-      <div class="main">
-         <div class="col-md-6 col-sm-12">
-            <div class="create-login-form">
-               <form action="/login" method="POST">
-                  <div class="form-group">
-                     <label>Email</label>
-                     <input type="text" class="form-control" name= "email" placeholder="Email">
-                  </div>
-                  <div class="form-group">
-                     <label>Password</label>
-                     <input type="password" class="form-control" name= "password" placeholder="Password">
-                  </div>
-                  <!-- MAY NOT NEED THIS INFORMATION IF DISPLAY NAME IS SAVED ALREADY! -->
-                  <!-- <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control" name= "display-name" placeholder="Username">
-                 </div> -->
-                  <button type="submit" class="btn btn-black">Log in</button>
-                  <!-- <button type="submit" class="btn btn-secondary">Register</button> -->
-               </form>
+      <div class="register-info-box">
+			<h2>Don't have an account?</h2>
+			<p>Sign up now!</p>
+			<label id="label-login" for="log-login-show">Register</label>
+			<input type="radio" name="active-log-panel" id="log-login-show">
+		</div>
+	<form action="/login" method="POST">						
+		<div class="white-panel">
+			<div class="login-show">
+				<h2>LOGIN</h2>
+				<input type="text" name="email" placeholder="Email">
+				<input type="password" name="password" placeholder="Password">
+				<input type="submit" value="Login"><br><br><br>
+            <p>By logging in, you agree to our terms and conditions.</p>
+				<!-- <a href="">Forgot password?</a> -->
+			</div>
+   </form>
+   <form action="/users" method="POST">
+      <div class="register-show">
+               <h2>REGISTER</h2>
+               <input type="text" name="email" placeholder="Email">
+               <input type="password" name="password" placeholder="Password">
+               <input type="text" name="display-name" placeholder="Username">
+               <input type="submit" value="Register">
             </div>
-         </div>
       </div>
-{% endblock %}
+   </form>
+		
+	</div>
+   						
+		
+   <script>
+         $(document).ready(function(){
+    $('.login-info-box').fadeOut();
+    $('.login-show').addClass('show-log-panel');
+});
+
+
+$('.login-reg-panel input[type="radio"]').on('change', function() {
+    if($('#log-login-show').is(':checked')) {
+        $('.register-info-box').fadeOut(); 
+        $('.login-info-box').fadeIn();
+        
+        $('.white-panel').addClass('right-log');
+        $('.register-show').addClass('show-log-panel');
+        $('.login-show').removeClass('show-log-panel');
+        
+    }
+    else if($('#log-reg-show').is(':checked')) {
+        $('.register-info-box').fadeIn();
+        $('.login-info-box').fadeOut();
+        
+        $('.white-panel').removeClass('right-log');
+        
+        $('.login-show').addClass('show-log-panel');
+        $('.register-show').removeClass('show-log-panel');
+    }
+});
+   </script>
+   {% endblock %}
+

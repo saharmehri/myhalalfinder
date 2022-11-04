@@ -68,7 +68,7 @@ class Restaurant(db.Model):
     unique_restaurant_id = db.Column(db.String, primary_key=True)
     name = db.Column(db.String)   
     address = db.Column(db.String) 
-    phone_number = db.Column(db.Integer)
+    phone_number = db.Column(db.String)
     rest_photo = db.Column(db.String)
 
     favorites = db.relationship("Favorite", back_populates = "restaurant")

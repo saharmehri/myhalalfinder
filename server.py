@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, session, redirect
-from model import connect_to_db, db
+from model import Favorite, User, Restaurant, Rating, connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
 import os
@@ -20,6 +20,7 @@ app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 
 API_KEY = os.environ['YELP_KEY']
 
+# *********************************************************************
 
 # Homepage
 @app.route('/homepage')
@@ -27,6 +28,8 @@ def homepage():
     """View homepage"""
 
     return render_template('homepage.html')
+
+# *********************************************************************
 
 # Realted to Restaurant Search
 @app.route('/foodfinder')
@@ -68,41 +71,109 @@ def find_halal_food():
 
     # To send ALL information use:
     businesses = response['businesses']
-    # Don't forget to change the return output so that it sends the businesses result 
-    
-    # Looping through .json file and getting pertinent information (key:value) pairs
-    # for rest in response['businesses']:
-    #     for key,value in rest.items():
-    #         if key == 'id':
-    #             unique_restaurant_id = value
-    #         if key == 'name':
-    #             name = value
-    #         # Tried looping through location to get the display_address but kept getting error
-    #         # if key == 'location':
-    #         #     # loop through location to get display address
-    #         #     for key,value in key.items():
-    #         #         address = key['locations']['display_address']
-    #         if key == 'dispay_phone':
-    #             phone_number = value
-    #         if key == 'image_url':
-    #             rest_photo = value
-    #         # Attemoted this way instead of line 81, but then getting UnboundLocalError: local variable 'phone_number' referenced before assignment
-    #         address = rest['location']['display_address']
     
     # Send information to new page (HTML) to view results.
     return render_template('search-results.html', businesses = businesses, results = response)
 
-    # ONLY USE IF GOING ABOUT LINE 73
-    # return render_template('homepage.html',
-    #                       unique_restaurant_id = unique_restaurant_id, name = name, address = address, phone_number = phone_number, rest_photo = rest_photo)
 
+# *********************************************************************
+
+# Related to Ratings:
+
+@app.route("/leave_a_rating/<unique_restaurant_id>") 
+def rating_form(unique_restaurant_id):
+    """Form to leave a rating."""
+
+    return render_template('rating_form.html', unique_restaurant_id=unique_restaurant_id)
+
+@app.route("/add_a_rating", methods=["POST"])
+def create_rating():
+    """Create a rating for restaurant."""
+
+    logged_in_email = session['user_email']
+    
+    if logged_in_email is None:
+        flash("You must log in to add to favorites.")
+        return redirect("/loginpage")
+
+    score = request.form.get("score")
+    # user_id = request.form.get("user_id")
+    unique_restaurant_id = request.form.get("unique_restaurant_id")
+
+    # query into session to get the user information 
+    user = User.query.filter_by(email=session['user_email']).first()
+
+    crud.create_rating(score, user.user_id, unique_restaurant_id)
+
+    flash("Rating added!")
+
+    return redirect("/homepage")
+
+
+
+# *********************************************************************
+
+# Related to Favorites:
+# Create favorite
+@app.route("/add_to_favorites", methods=["POST"]) 
+def create_favorite():
+    """Create a favorite."""
+    
+    logged_in_email = session['user_email']
+    
+    if logged_in_email is None:
+        flash("You must log in to add to favorites.")
+        return redirect("/loginpage")
+    
+    
+    name = request.form.get("name")
+    address = request.form.get("location") 
+    address2 = request.form.get("location2")
+    address = address + address2 
+    phone_number = request.form.get("phone")
+    rest_photo = request.form.get("rest_photo")
+    unique_restaurant_id = request.form.get("unique_restaurant_id")
+    
+    crud.create_restaurant(unique_restaurant_id, name, address, phone_number, rest_photo)
+    # taking session user email 
+    user = User.query.filter_by(email=session['user_email']).first()
+    # user is user object from database (the session user email) and keying to get user_id
+    crud.create_favorite(user.user_id, unique_restaurant_id)
+    flash(f"Added to favorites!")
+
+    return redirect("/all_favorites")
+
+@app.route("/all_favorites")
+def show_favorites(): 
+    """Show all favorites."""
+
+    favorites = crud.get_favorites(session['user_email'])
+
+    return render_template("favorites.html", favorites=favorites)
+
+# Related to line 72 of crud.py
+@app.route("/remove-favorite/<unique_restaurant_id>")
+def remove_favorite(unique_restaurant_id):
+    """Removes a favorite from list of favorites."""
+
+    # FIX: USE SAME PROCESS FOR RATING FORM -> ADJUST FAVORITE
+    unique_restaurant_id = request.form.get("unique_restaurant_id")
+    user = User.query.filter_by(email=session['user_email']).first()
+
+    # FIX: SHOULD NOT HAVE 2 ARGUMENTS 
+    crud.delete_favorite(user, unique_restaurant_id) 
+    flash("Favorite removed!")
+
+    return redirect('/all_favorites')
+
+# *********************************************************************
 
 # Related to creating login
-@app.route('/create_login')
-def create_login():
-    """Create a login page. User wants to create a login."""
+# @app.route('/create_login')
+# def create_login():
+#     """Create a login page. User wants to create a login."""
 
-    return render_template('createlogin.html')
+#     return render_template('createlogin.html')
 
 @app.route('/users', methods=["POST"])
 def register_user():
@@ -124,6 +195,8 @@ def register_user():
         flash("Success! Please log in.")
     
         return redirect("/loginpage")
+
+# *********************************************************************
 
 # Related to logging in 
 @app.route('/loginpage')
@@ -148,21 +221,13 @@ def user_login():
             # flash message 'logged in'
             flash("Success! You are now logged in.")
             # redirect to user profile
-            return render_template('my_profile.html')
+            return redirect('/homepage')
         else: 
             flash("The password is incorrect. Please try again.")
             return redirect('/loginpage')
     else: 
         flash("The email is invalid. Please try again.")
         return redirect('/loginpage')
-
-
-
-
-
-
-    
-
 
 
 
