@@ -97,19 +97,30 @@ def create_rating():
         return redirect("/loginpage")
 
     score = request.form.get("score")
-    # user_id = request.form.get("user_id")
+    comment = request.form.get("comment")
     unique_restaurant_id = request.form.get("unique_restaurant_id")
 
     # query into session to get the user information 
     user = User.query.filter_by(email=session['user_email']).first()
 
-    crud.create_rating(score, user.user_id, unique_restaurant_id)
+    crud.create_rating(score, comment, user.user_id, unique_restaurant_id)
 
     flash("Rating added!")
 
-    return redirect("/homepage")
+    return redirect("/all_favorites")
 
+@app.route("/all_ratings/<unique_restaurant_id>")
+def view_all_ratings(unique_restaurant_id):
+    """View all the ratings for restaurant."""
 
+    user = User.query.filter_by(email=session['user_email']).first()
+
+    restaurant = Restaurant.query.filter_by(unique_restaurant_id=unique_restaurant_id).first()
+
+    all_ratings = crud.get_ratings(unique_restaurant_id)
+    print(all_ratings)
+
+    return render_template('view_ratings.html', all_ratings=all_ratings, unique_restaurant_id=unique_restaurant_id, user=user, restaurant=restaurant)
 
 # *********************************************************************
 
@@ -148,6 +159,15 @@ def show_favorites():
     """Show all favorites."""
 
     favorites = crud.get_favorites(session['user_email'])
+    # ratings = favorites.restaurant.ratings
+    # unique_restaurant_id = favorites.unique_restaurant_id
+    
+    # average_ratings = {}
+    # for liked in favorites:
+    #     for ratings in liked:
+    #         average = sum(ratings)/len(ratings)
+    #         average_ratings[unique_restaurant_id] = average
+
 
     return render_template("favorites.html", favorites=favorites)
 
@@ -155,13 +175,10 @@ def show_favorites():
 @app.route("/remove-favorite/<unique_restaurant_id>")
 def remove_favorite(unique_restaurant_id):
     """Removes a favorite from list of favorites."""
-
-    # FIX: USE SAME PROCESS FOR RATING FORM -> ADJUST FAVORITE
-    unique_restaurant_id = request.form.get("unique_restaurant_id")
+   
     user = User.query.filter_by(email=session['user_email']).first()
 
-    # FIX: SHOULD NOT HAVE 2 ARGUMENTS 
-    crud.delete_favorite(user, unique_restaurant_id) 
+    crud.delete_favorite(user.user_id, unique_restaurant_id) 
     flash("Favorite removed!")
 
     return redirect('/all_favorites')

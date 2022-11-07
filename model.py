@@ -33,6 +33,7 @@ class Rating(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     # the unique_restaurant_id will come from the Yelp API return for that specific restaurant
     unique_restaurant_id = db.Column(db.String, db.ForeignKey("restaurants.unique_restaurant_id"))
+    comment = db.Column(db.Text)
 
     user = db.relationship("User", back_populates = "ratings")
     restaurant = db.relationship("Restaurant", back_populates = "ratings")
@@ -50,6 +51,7 @@ class Favorite(db.Model):
     favorite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     unique_restaurant_id = db.Column(db.String, db.ForeignKey("restaurants.unique_restaurant_id"))
+    
 
     user = db.relationship("User", back_populates = "favorites")
     restaurant = db.relationship("Restaurant", back_populates = "favorites")

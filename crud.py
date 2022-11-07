@@ -29,7 +29,7 @@ def get_user_by_id(user_id):
 
 # Rating functions start here:
 
-def create_rating(score, user_id, unique_restaurant_id):
+def create_rating(score, comment, user_id, unique_restaurant_id):
     """Create and return a restaurant rating"""
     
     existing_rating = Rating.query.filter_by(unique_restaurant_id=unique_restaurant_id).first()
@@ -39,6 +39,7 @@ def create_rating(score, user_id, unique_restaurant_id):
 
     rating = Rating(
             score=score, 
+            comment=comment,
             user_id=user_id, 
             unique_restaurant_id=unique_restaurant_id
     )
@@ -48,6 +49,10 @@ def create_rating(score, user_id, unique_restaurant_id):
     
     return rating
 
+def get_ratings(unique_restaurant_id):
+    """Get all ratings for restaurant."""
+
+    return Rating.query.filter_by(unique_restaurant_id=unique_restaurant_id).all()
 
 
 # *******************************************************************
@@ -86,7 +91,8 @@ def delete_favorite(user_id, unique_restaurant_id):
     # user is not recognized on line 87
     # user = User.query.filter_by(user_id=user_id).first()
 
-    restaurant = Favorite.query.filter_by(user_id=user.email, unique_restaurant_id=unique_restaurant_id).first()
+    restaurant = Favorite.query.filter_by(user_id=user_id, unique_restaurant_id=unique_restaurant_id).first()
+
 
     db.session.delete(restaurant)
     db.session.commit()

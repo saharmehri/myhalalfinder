@@ -28,11 +28,21 @@
     display: inline-block;
   }
 
+  div.rating-box {
+    border-radius: 3px;
+    border: 3px solid red;
+    width: 50em;
+    height: 10em;
+    margin: 2em;
+    padding: 1em;
+    display: inline-block;
+  }
+
 
 /* ********************************************************************** */
 /* Login Form   */
 @import url('https://fonts.googleapis.com/css?family=Mukta');
-body{
+.login-page{
   font-family: 'Mukta', sans-serif;
 	height:100vh;
 	min-height:550px;
@@ -181,9 +191,10 @@ a{
     letter-spacing: 1px;
     z-index: 99;
 }
-a{
+.new-links{
   text-decoration:none;
   color:white;
+  background: black;
 }
 
 #home-submit{

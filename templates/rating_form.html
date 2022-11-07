@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+<head>
+    {% block title %}Leave a rating{% endblock %}
+
+    {% block head %}
+    <link rel="stylesheet" href="/static/css/homepage.css">
+    {% endblock %}
+</head>
+
+{% block body %}
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="#">My Halal Finder</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
+            <a class="nav-link" href="/foodfinder">Find Me Halal Food</a>
+            <!-- <a class="nav-link" href="/create_login">Create a Login</a> -->
+            <a class="nav-link" href="/loginpage">Login</a>
+            <a class="nav-link" href="/all_favorites">My favorites</a>
+            <!-- to add more tabs on navbar just use below as skeleton -->
+            <!-- <a class="nav-link disabled">Disabled</a> -->
+            </div>
+        </div>
+        </div>
+    </nav>
+
+    <!-- Form for restaurant rating  -->
+    <div class="container">
+        <h1>Leave a Review!</h1><br>
+        <h1>Help your fellow halal eaters. Yay or Nay?</h1><br>
+
+        <form class="rating-form" method="POST" action="/add_a_rating">
+           
+                <select name="score" id="restaurant-score">
+                    <option value="1">1- Not recommend</option>
+                    <option value="2">2- Needs improvement</option>
+                    <option value="3">3- Ok</option>
+                    <option value="4">4- Good</option>
+                    <option value="5">5- Wow, Amazing!</option>
+                </select>
+                <label for= "restaurant-score">Select your rating.</label><br><br>
+                <label for="restaurant-review">Leave a Review!</label><br>
+                <textarea name="comment" id="comment" placeholder="Food was great and service was spectacular- such a vibe! Highly recommend the mocktails! :)" rows="5" cols="60"></textarea>
+            
+                <input type="hidden" name="unique_restaurant_id" value="{{ unique_restaurant_id }}">
+
+             <div class="col-12">   
+                <button type="submit" class="btn btn-primary">Post Review</button>
+            </div>
+        </form>
+    </div>
+</body>
+    
+{% endblock %}

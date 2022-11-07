@@ -1,0 +1,75 @@
+<!-- Results of user search  -->
+
+{% extends 'base.html' %}
+
+<head>
+    {% block title %}Halal Food Results{% endblock %}
+
+    {% block head %}
+    <link rel="stylesheet" href="/static/css/homepage.css">
+    {% endblock %}
+</head>
+
+
+
+{% block body %}
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="#">My Halal Finder</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
+            <a class="nav-link" href="/foodfinder">Find Me Halal Food</a>
+            <!-- <a class="nav-link" href="/create_login">Create a Login</a> -->
+            <a class="nav-link" href="/loginpage">Login</a>
+            <a class="nav-link" href="/all_favorites">My favorites</a>
+            <!-- to add more tabs on navbar just use below as skeleton -->
+            <!-- <a class="nav-link disabled">Disabled</a> -->
+            </div>
+        </div>
+        </div>
+    </nav>
+
+    <!-- Returned Results- Filtered based on user preference from form on previous page -->
+    <div id="rest-search-results">
+        <h2>Halal Search Results</h2>
+        
+        <p> Halal food near you:
+          <span id="result-count">
+            {{ results['total'] }}
+          </span>
+        </p>
+
+        <div class="rest-list">
+            <ol>
+                <!-- input creates boxes around information, how to remove -->
+                {% for business in businesses %}
+                <form method="POST" action="/add_to_favorites">
+                <li>
+                    <input type= 'hidden' name="rest_photo" value="{{ business.image_url }}">
+                    <img src="{{ business.image_url }}" alt="Restaurant immage" width="300" height="300"> <br>
+                    <input class= 'results' name="name" value="{{ business['name'] }}"> <br>
+                    <input class= 'results' name="location" value="{{ business['location']['display_address'][0] }}"> <br>
+                    <input class= 'results' name="location2" value="{{ business['location']['display_address'][1] }}"> <br>
+                    <input class= 'results' name="phone" value="{{ business['display_phone'] }}"><br>
+                    <!-- # add unique rest id with type= hidden  -->
+                    <input type="hidden" name="unique_restaurant_id" value="{{ business.id }}">
+                    <!-- Links should be red buttons -->
+                    <input type="submit" value="Add to favorites">
+                    <a class="rate" href="/leave_a_rating">Leave a rating</a>
+                    <a class="directions" href="/go-to-restaurant">Go to restaurant</a> 
+                </li>
+                </form>
+            
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+</body>
+{% endblock %}
+
