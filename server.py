@@ -6,6 +6,7 @@ import os
 import requests
 import urllib
 import math
+import functools
 
 from urllib.parse import quote
 
@@ -93,7 +94,7 @@ def create_rating():
     logged_in_email = session['user_email']
     
     if logged_in_email is None:
-        flash("You must log in to add to favorites.")
+        flash("You must log in to add to favorites.", "error")
         return redirect("/loginpage")
 
     score = request.form.get("score")
@@ -105,7 +106,7 @@ def create_rating():
 
     crud.create_rating(score, comment, user.user_id, unique_restaurant_id)
 
-    flash("Rating added!")
+    flash("Rating added!", "success")
 
     return redirect("/all_favorites")
 
@@ -113,14 +114,14 @@ def create_rating():
 def view_all_ratings(unique_restaurant_id):
     """View all the ratings for restaurant."""
 
-    user = User.query.filter_by(email=session['user_email']).first()
+    # user = User.query.filter_by(email=session['user_email']).first()
 
     restaurant = Restaurant.query.filter_by(unique_restaurant_id=unique_restaurant_id).first()
 
     all_ratings = crud.get_ratings(unique_restaurant_id)
     print(all_ratings)
 
-    return render_template('view_ratings.html', all_ratings=all_ratings, unique_restaurant_id=unique_restaurant_id, user=user, restaurant=restaurant)
+    return render_template('view_ratings.html', all_ratings=all_ratings, unique_restaurant_id=unique_restaurant_id, restaurant=restaurant)
 
 # *********************************************************************
 
@@ -133,7 +134,7 @@ def create_favorite():
     logged_in_email = session['user_email']
     
     if logged_in_email is None:
-        flash("You must log in to add to favorites.")
+        flash("You must log in to add to favorites.", "error")
         return redirect("/loginpage")
     
     
@@ -150,7 +151,7 @@ def create_favorite():
     user = User.query.filter_by(email=session['user_email']).first()
     # user is user object from database (the session user email) and keying to get user_id
     crud.create_favorite(user.user_id, unique_restaurant_id)
-    flash(f"Added to favorites!")
+    flash(f"Added to favorites!", "success")
 
     return redirect("/all_favorites")
 
@@ -158,18 +159,34 @@ def create_favorite():
 def show_favorites(): 
     """Show all favorites."""
 
-    favorites = crud.get_favorites(session['user_email'])
-    # ratings = favorites.restaurant.ratings
-    # unique_restaurant_id = favorites.unique_restaurant_id
+    logged_in_email = session.get('user_email')
     
-    # average_ratings = {}
-    # for liked in favorites:
-    #     for ratings in liked:
-    #         average = sum(ratings)/len(ratings)
-    #         average_ratings[unique_restaurant_id] = average
+    if logged_in_email is None:
+        flash("You must log in to view favorites.", "error")
+        return redirect("/loginpage")
 
+    favorites = crud.get_favorites(session['user_email'])
+    
+    
+    average_ratings = {}
+    
+    for favorite in favorites:
+        average_ratings[favorite.unique_restaurant_id]=[]
+        ratings = favorite.restaurant.ratings
+        for rating in ratings:
+            average_ratings[favorite.unique_restaurant_id].append(rating.score)
 
-    return render_template("favorites.html", favorites=favorites)
+    for unique_restaurant_id in average_ratings:
+        total_scores = len(average_ratings[unique_restaurant_id])
+        if total_scores == 0:
+            average_ratings[unique_restaurant_id] = "No ratings yet"
+        else:
+            sum_of_scores = functools.reduce(lambda a,b: a+b, average_ratings[unique_restaurant_id])
+            average = sum_of_scores/total_scores
+            average_ratings[unique_restaurant_id]= average
+    print(average_ratings)
+
+    return render_template("favorites.html", favorites=favorites, average_ratings=average_ratings)
 
 # Related to line 72 of crud.py
 @app.route("/remove-favorite/<unique_restaurant_id>")
@@ -179,7 +196,7 @@ def remove_favorite(unique_restaurant_id):
     user = User.query.filter_by(email=session['user_email']).first()
 
     crud.delete_favorite(user.user_id, unique_restaurant_id) 
-    flash("Favorite removed!")
+    flash("Favorite removed!", "success")
 
     return redirect('/all_favorites')
 
@@ -203,13 +220,13 @@ def register_user():
     user = crud.get_user_by_email(email)
     
     if user:
-        flash(f"The email {email} already exists. Please try again.")
+        flash(f"The email {email} already exists. Please try again.", "error")
         return redirect("/create_login")
     else: 
         user = crud.create_user(email, password, display_name)
         db.session.add(user)
         db.session.commit()
-        flash("Success! Please log in.")
+        flash("Success! Please log in.", "success")
     
         return redirect("/loginpage")
 
@@ -236,15 +253,32 @@ def user_login():
             # add email to session to recognize and save
             session['user_email'] = user.email
             # flash message 'logged in'
-            flash("Success! You are now logged in.")
+            flash("Success! You are now logged in.", "success")
             # redirect to user profile
             return redirect('/homepage')
         else: 
-            flash("The password is incorrect. Please try again.")
+            flash("The password is incorrect. Please try again.", "error")
             return redirect('/loginpage')
     else: 
-        flash("The email is invalid. Please try again.")
+        flash("The email is invalid. Please try again.", "error")
         return redirect('/loginpage')
+
+# *********************************************************************
+
+# Related to logging out
+
+@app.route('/logout')
+def logging_out():
+    """Logs user out of account."""
+    
+    if 'user_email' in session:
+        flash("You have been logged out succesfully!", "success")
+        session.pop('user_email')
+    
+    return redirect('/homepage')
+
+
+
 
 
 

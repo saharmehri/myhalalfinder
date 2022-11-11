@@ -32,7 +32,7 @@ def get_user_by_id(user_id):
 def create_rating(score, comment, user_id, unique_restaurant_id):
     """Create and return a restaurant rating"""
     
-    existing_rating = Rating.query.filter_by(unique_restaurant_id=unique_restaurant_id).first()
+    existing_rating = Rating.query.filter_by(user_id=user_id, unique_restaurant_id=unique_restaurant_id).first()
 
     if existing_rating:
         return existing_rating
