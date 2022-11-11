@@ -104,9 +104,12 @@ def create_rating():
     # query into session to get the user information 
     user = User.query.filter_by(email=session['user_email']).first()
 
-    crud.create_rating(score, comment, user.user_id, unique_restaurant_id)
+    if crud.rating_exists(user.user_id, unique_restaurant_id):
+        flash("Restaurant already rated.", "error")
+    else:
+        crud.create_rating(score, comment, user.user_id, unique_restaurant_id)
 
-    flash("Rating added!", "success")
+        flash("Rating added!", "success")
 
     return redirect("/all_favorites")
 
@@ -150,8 +153,12 @@ def create_favorite():
     # taking session user email 
     user = User.query.filter_by(email=session['user_email']).first()
     # user is user object from database (the session user email) and keying to get user_id
-    crud.create_favorite(user.user_id, unique_restaurant_id)
-    flash(f"Added to favorites!", "success")
+
+    if crud.favorite_exists(user.user_id, unique_restaurant_id):
+        flash("Restaurant already in favorites.", "error")
+    else:
+        crud.create_favorite(user.user_id, unique_restaurant_id)
+        flash(f"Added to favorites!", "success")
 
     return redirect("/all_favorites")
 

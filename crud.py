@@ -29,14 +29,19 @@ def get_user_by_id(user_id):
 
 # Rating functions start here:
 
-def create_rating(score, comment, user_id, unique_restaurant_id):
-    """Create and return a restaurant rating"""
-    
+def rating_exists(user_id, unique_restaurant_id):
+    """Checks if rating exists in database for user"""
+
     existing_rating = Rating.query.filter_by(user_id=user_id, unique_restaurant_id=unique_restaurant_id).first()
 
     if existing_rating:
-        return existing_rating
+        return True
 
+    return False
+
+def create_rating(score, comment, user_id, unique_restaurant_id):
+    """Create and return a restaurant rating"""
+    
     rating = Rating(
             score=score, 
             comment=comment,
@@ -59,13 +64,18 @@ def get_ratings(unique_restaurant_id):
 
 # Favorite functions start here:
 
-def create_favorite(user_id, unique_restaurant_id):
-    """Create and return a favorite restaurant."""
+def favorite_exists(user_id, unique_restaurant_id):
+    """Checks if favorite exists in database for specific user"""
 
     existing_favorite = Favorite.query.filter_by(user_id=user_id, unique_restaurant_id=unique_restaurant_id).first()
     
     if existing_favorite:
-        return existing_favorite
+        return True
+
+    return False
+
+def create_favorite(user_id, unique_restaurant_id):
+    """Create and return a favorite restaurant."""
 
     favorite = Favorite(
             user_id=user_id, 
