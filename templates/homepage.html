@@ -1,33 +1,36 @@
-{% extends 'base.html' %}
-{% block title %}Homepage-My Halal Finder{% endblock %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>
+      Homepage-My Halal Finder
+    </title>
+    <link rel="stylesheet" href="/static/css/homepage.css">
+    <!-- Creates colored flash messages  -->
+    {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+            {% for category, msg in messages %}
+                {% if category == "success" %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">{{ msg }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
 
-{% block head %}
-<link rel="stylesheet" href="/static/css/homepage.css">
-{% endblock %}
+                {% if category == "error" %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">{{ msg }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+      {% endwith %}
+</head>
 
-{% block body %}
 <body>
-    <!-- <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">My Halal Finder</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
-          <a class="nav-link" href="/foodfinder">Find Me Halal Food</a>
-          <!-- <a class="nav-link" href="/create_login">Create a Login</a> -->
-          <!-- <a class="nav-link" href="/loginpage">Login</a>
-          <a class="nav-link" href="/all_favorites">My favorites</a> -->
-          <!-- to add more tabs on navbar just use below as skeleton -->
-          <!-- <a class="nav-link disabled">Disabled</a> -->
-        <!-- </div>
-      </div>
-    </div>
-  </nav> -->
   
-    <a id="login-submit" href="/loginpage">Login</a>
+  <a id="login-submit" href="/loginpage">Login</a>
  
   <div class="header-middle">
     <h1>Welcome to My Halal Finder</h1>
@@ -42,8 +45,8 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 
-{% endblock %}
 
 
