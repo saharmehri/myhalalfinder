@@ -59,6 +59,11 @@ def get_ratings(unique_restaurant_id):
 
     return Rating.query.filter_by(unique_restaurant_id=unique_restaurant_id).all()
 
+def update_rating(rating_id, new_score):
+    """ Update a rating given rating_id and the updated score. """
+    rating = Rating.query.get(rating_id)
+    rating.score = new_score
+
 
 # *******************************************************************
 

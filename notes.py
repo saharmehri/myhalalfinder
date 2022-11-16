@@ -152,3 +152,15 @@
 #          </div>
 #       </div>
 # {% endblock %} -->
+
+
+
+# favorites.html
+
+# {% for i in range(1, 6) %}
+#                     {% if average_ratings[favorite.unique_restaurant_id] >= i %}
+#                         <span class="fa fa-star checked"></span>
+#                     {% else %}
+#                         <span class="fa fa-star"></span>
+#                     {% endif %}
+#                   {% endfor %} 

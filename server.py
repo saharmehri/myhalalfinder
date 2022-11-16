@@ -186,7 +186,7 @@ def show_favorites():
     for unique_restaurant_id in average_ratings:
         total_scores = len(average_ratings[unique_restaurant_id])
         if total_scores == 0:
-            average_ratings[unique_restaurant_id] = "No ratings yet"
+            average_ratings[unique_restaurant_id] = 0.0
         else:
             sum_of_scores = functools.reduce(lambda a,b: a+b, average_ratings[unique_restaurant_id])
             average = sum_of_scores/total_scores

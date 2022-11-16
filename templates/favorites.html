@@ -21,24 +21,31 @@
             <div class="card">
                 <div class="rating">
                     {% for i in range(1, 6) %}
-                    {% if average_ratings[favorite.unique_restaurant_id] >= i %}
+                        {% if average_ratings[favorite.unique_restaurant_id] >= i %}
                         <span class="fa fa-star checked"></span>
                     {% else %}
                         <span class="fa fa-star"></span>
                     {% endif %}
                   {% endfor %} 
-                  <a class="new-links" href="/all_ratings/{{ favorite.unique_restaurant_id }}">Reviews</a><br>
+                  <!-- <a class="new-links" href="/all_ratings/{{ favorite.unique_restaurant_id }}"> Read Reviews</a> -->
+                  <a href="/all_ratings/{{ favorite.unique_restaurant_id }}" type="submit" class="btn btn-primary"
+                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                    Reviews
+                </a><br><br>
             </div>
                        
                         <img src="{{ favorite.restaurant.rest_photo}}" alt="Restaurant immage" width="100" height="100"><br>
-                        {{ favorite.restaurant.name }}<br>
+                        <b>{{ favorite.restaurant.name }}</b><br>
                         {{ favorite.restaurant.address }}<br>
                         {{ favorite.restaurant.phone_number }}<br>
-                        <input type="hidden" name="unique_restaurant_id" value="{{ favorite.restaurant.unique_restaurant_id }}">
-                        <a class="new-links" href="/remove-favorite/{{ favorite.unique_restaurant_id }}">Remove favorite</a><br>
-                        <a class="new-links" href="/leave_a_rating/{{ favorite.unique_restaurant_id }}">Leave a rating</a><br>
-                        
-                        <a class="new-links" href="/go-to-restaurant">Go to restaurant</a><br>
+                        <input type="hidden" name="unique_restaurant_id" value="{{ favorite.restaurant.unique_restaurant_id }}"><br>
+                        <!-- <a class="new-links" href="/remove-favorite/{{ favorite.unique_restaurant_id }}">Remove favorite</a><br> -->
+                        <a href="/remove-favorite/{{ favorite.unique_restaurant_id }}" type="submit" class="btn btn-outline-danger btn-sm" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Remove Favorite</a><br>
+                        <!-- <a class="new-links" href="/leave_a_rating/{{ favorite.unique_restaurant_id }}">Leave a rating</a><br> -->
+                        <a href="/leave_a_rating/{{ favorite.unique_restaurant_id }}" type="submit" class="btn btn-outline-danger btn-sm" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Leave A Rating</a>   
+                        <!-- <a class="new-links" href="/go-to-restaurant">Go to restaurant</a><br> -->
+                        <a href="/go-to-restaurant" type="submit" class="btn btn-outline-danger btn-sm" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Go To Restaurant</a><br>
+
             </div>
         </form>
        
