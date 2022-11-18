@@ -19,14 +19,20 @@
         <div class="rating-box">
             {{ rating.user.display_name }} <br>
             {% if rating.user.email == session["user_email"] %}
-            <span id="rating-information">
-                Rating: {{ rating.score }} out of 5<br>
-            {{ rating.comment }} <br>
-            </span>
+            <span id="rating-score">
+                Rating: {{ rating.score }} out of 5
+            </span><br>
+            <span id="rating-comment">
+                 {{ rating.comment }} 
+            </span><br>
             <button id="rating-edit-button">Edit Rating</button>
             {% else %}
-            Rating: {{ rating.score }} out of 5<br>
-            {{ rating.comment }} <br>
+            <span>
+                Rating: {{ rating.score }} out of 5
+            </span><br>
+            <span>
+                 {{ rating.comment }} 
+            </span><br>
             {% endif %}
         </div>  
 
