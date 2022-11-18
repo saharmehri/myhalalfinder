@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, session, redirect
+from flask import Flask, render_template, request, flash, session, redirect,jsonify
 from model import Favorite, User, Restaurant, Rating, connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
@@ -91,10 +91,10 @@ def rating_form(unique_restaurant_id):
 def create_rating():
     """Create a rating for restaurant."""
 
-    logged_in_email = session['user_email']
+    # logged_in_email = session['user_email']
     
-    if logged_in_email is None:
-        flash("You must log in to add to favorites.", "error")
+    if "user_email" not in session:
+        flash("You must log in to leave a rating.", "error")
         return redirect("/loginpage")
 
     score = request.form.get("score")
@@ -126,6 +126,22 @@ def view_all_ratings(unique_restaurant_id):
 
     return render_template('view_ratings.html', all_ratings=all_ratings, unique_restaurant_id=unique_restaurant_id, restaurant=restaurant)
 
+@app.route("/update_ratings", methods=["POST"])
+def update_ratings():
+    """Updates rating."""
+    
+    updated_score = request.json["rating_score"]
+    updated_comment = request.json["rating_comment"]
+    unique_restaurant_id = request.json["unique_restaurant_id"]
+
+    user = User.query.filter_by(email=session['user_email']).first()
+
+    crud.update_rating(user.user_id, unique_restaurant_id, updated_score, updated_comment)
+
+    response = {"score": updated_score, "comment": updated_comment}
+    
+    return jsonify(response)
+
 # *********************************************************************
 
 # Related to Favorites:
@@ -134,11 +150,15 @@ def view_all_ratings(unique_restaurant_id):
 def create_favorite():
     """Create a favorite."""
     
-    logged_in_email = session['user_email']
+    # logged_in_email = session['user_email']
     
-    if logged_in_email is None:
+    if 'user_email' not in session:
         flash("You must log in to add to favorites.", "error")
         return redirect("/loginpage")
+
+    # if logged_in_email is None:
+    #     flash("You must log in to add to favorites.", "error")
+    #     return redirect("/loginpage")
     
     
     name = request.form.get("name")

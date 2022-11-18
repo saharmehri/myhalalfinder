@@ -18,12 +18,45 @@
         {% for rating in all_ratings %}
         <div class="rating-box">
             {{ rating.user.display_name }} <br>
+            {% if rating.user.email == session["user_email"] %}
+            <span id="rating-information">
+                Rating: {{ rating.score }} out of 5<br>
+            {{ rating.comment }} <br>
+            </span>
+            <button id="rating-edit-button">Edit Rating</button>
+            {% else %}
             Rating: {{ rating.score }} out of 5<br>
-            {{ rating.comment }}
-        </div>
+            {{ rating.comment }} <br>
+            {% endif %}
+        </div>  
+
+
     
         {% endfor %}
     </ol>
 </div>
+<!-- button hidden inititally -->
+<div id="edit-rating-div" style="display:none">
+    <form id="edit-rating-form">
+        <select name="score" id="restaurant-score">
+            <option value="1">1- Not recommend</option>
+            <option value="2">2- Needs improvement</option>
+            <option value="3">3- Ok</option>
+            <option value="4">4- Good</option>
+            <option value="5">5- Wow, Amazing!</option>
+        </select>
+        <label for= "restaurant-score">Select your rating.</label><br><br>
+        <label for="restaurant-review">Leave a Review!</label><br>
+        <textarea name="comment" id="comment" rows="5" cols="60"></textarea>
+    
+        <input type="hidden" id="unique-restaurant-id" name="unique_restaurant_id" value="{{ restaurant.unique_restaurant_id }}">
+        <div class="col-12">   
+            <button type="submit" class="btn btn-primary">Update Review</button>
+        </div>
+    </form>
+</div>
+
+<script src="/static/js/updateRatings.js">
+</script>
 </body>
 {% endblock %}

@@ -59,11 +59,16 @@ def get_ratings(unique_restaurant_id):
 
     return Rating.query.filter_by(unique_restaurant_id=unique_restaurant_id).all()
 
-def update_rating(rating_id, new_score):
+def update_rating(user_id, unique_restaurant_id, updated_score, updated_comment):
     """ Update a rating given rating_id and the updated score. """
-    rating = Rating.query.get(rating_id)
-    rating.score = new_score
+    
+    # rating = Rating.query.get(Restaurant.unique_restaurant_id).first()
+    rating = Rating.query.filter_by(user_id=user_id, unique_restaurant_id=unique_restaurant_id).first()
+  
+    rating.score = updated_score
+    rating.comment = updated_comment
 
+    db.session.commit()
 
 # *******************************************************************
 
