@@ -26,6 +26,7 @@
     margin: 2em;
     padding: 1em;
     display: inline-block;
+    text-align: center;
   }
 
   div.rating-box {
@@ -36,6 +37,7 @@
     margin: 2em;
     padding: 1em;
     display: inline-block;
+    background-color: white
   }
 
 
@@ -218,16 +220,16 @@ a{
     padding: 10px;
     text-transform: uppercase;
     border-radius: 2px;
-    float:left;
+    float:right;
     cursor:pointer;
 } 
-  .vertical-center {
+  #vertical-center {
     /* margin: 0;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%); */
-    position: absolute;
+    /* position: absolute;
     top: 350px;;
     left: 625px;; 
     background: red;
@@ -236,12 +238,16 @@ a{
     padding: 20px;
     width: 180px;
     height: 65px;
+    text-align: center; */
+    padding: 125px 0;
     text-align: center;
     
   }
 
 .homepage-header-middle{
     text-align: center;
+    padding: 70px 0;
+   
 }
 
 
@@ -264,19 +270,47 @@ a{
   }
   #favorites-your-favorites{
     text-align: center;
+    background-color: white;
   }
   body {
-    background-image: url("halal-finder-background.jpg");
+    background-image: url("halal-photo-background.jpg");
+  }
+  .container{
+    text-align: center;
+  }
+  .review-forn{
+    background-color: white;
+  }
+  .pref-header{
+    text-align: center;
+    background-color: white;
+  }
+  #pref-form{
+    text-align: start;
   }
 
-
-
-
-
-
-
-
-
-
-
+  .review-h1{
+    border-radius: 3px;
+    border: 3px solid black;
+    width: 50em;
+    height: 20em;
+    margin: 2em;
+    padding: 1em;
+    display: inline-block;
+    background-color: white;
+  }
+  .rating-name-header{
+    text-align: center;
+    background-color: white;
+  }
+  #home-submit{
+    float:right
+  }
+  #results-card{
+    width: 15em;
+    height: 23em;
+    margin: 2em;
+    padding: 1em;
+    display: inline-block;
+  }
   

@@ -13,10 +13,12 @@
 
     <!-- Form for restaurant rating  -->
     <div class="container">
-        <h1>Leave a Review!</h1><br>
-        <h1>Help your fellow halal eaters. Yay or Nay?</h1><br>
-
-        <form class="rating-form" method="POST" action="/add_a_rating">
+        
+            <h1><span style="background-color:white">Leave A Review!</span></h1><br>
+        <h1><span style="background-color:white">Help your fellow halal eaters. Yay or Nay?</span></h1><br>
+            <div class="review-h1">
+                <div class="review-form">
+            <form class="rating-form" method="POST" action="/add_a_rating">
            
                 <select name="score" id="restaurant-score">
                     <option value="1">1- Not recommend</option>
@@ -26,15 +28,21 @@
                     <option value="5">5- Wow, Amazing!</option>
                 </select>
                 <label for= "restaurant-score">Select your rating.</label><br><br>
-                <label for="restaurant-review">Leave a Review!</label><br>
+                <label for="restaurant-review">Leave a Comment!</label><br>
                 <textarea name="comment" id="comment" placeholder="Food was great and service was spectacular- such a vibe! Highly recommend the mocktails! :)" rows="5" cols="60"></textarea>
             
                 <input type="hidden" name="unique_restaurant_id" value="{{ unique_restaurant_id }}">
 
              <div class="col-12">   
-                <button type="submit" class="btn btn-primary">Post Review</button>
+                <button type="submit" class="btn btn-danger">Post Review</button><br>
             </div>
         </form>
+        </div>
+            </div>
+            
+
+        
+       
     </div>
 
     

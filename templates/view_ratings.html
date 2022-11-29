@@ -1,31 +1,32 @@
 {% extends 'base.html' %}
 
-<head>
     {% block title %}View all ratings{% endblock %}
 
     {% block head %}
     <link rel="stylesheet" href="/static/css/homepage.css">
     {% endblock %}
-</head>
+
 
 {% block body %}
 
-
-<h1>All Ratings for {{ restaurant.name }}</h1>
+<h1 class="rating-name-header">All Ratings for {{ restaurant.name }}</h1>
 <div class="ratings-list">
     <ol>
         <!-- input creates boxes around information, how to remove -->
         {% for rating in all_ratings %}
         <div class="rating-box">
-            {{ rating.user.display_name }} <br>
+            <b>{{ rating.user.display_name }} </b><br>
             {% if rating.user.email == session["user_email"] %}
             <span id="rating-score">
                 Rating: {{ rating.score }} out of 5
             </span><br>
             <span id="rating-comment">
                  {{ rating.comment }} 
-            </span><br>
-            <button id="rating-edit-button">Edit Rating</button>
+            </span><br><br>
+            <!-- <button id="rating-edit-button">Edit Rating</button> -->
+            <button type="button" class="btn btn-danger btn-sm" id="rating-edit-button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float:right">
+                Edit Rating
+              </button>
             {% else %}
             <span>
                 Rating: {{ rating.score }} out of 5
@@ -42,7 +43,14 @@
     </ol>
 </div>
 <!-- button hidden inititally -->
-<div id="edit-rating-div" style="display:none">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Rating</h1>
+          </div>
+        <div class="modal-body">
+          <div id="edit-rating-div" style="display:none">
     <form id="edit-rating-form">
         <select name="score" id="restaurant-score">
             <option value="1">1- Not recommend</option>
@@ -53,14 +61,21 @@
         </select>
         <label for= "restaurant-score">Select your rating.</label><br><br>
         <label for="restaurant-review">Leave a Review!</label><br>
-        <textarea name="comment" id="comment" rows="5" cols="60"></textarea>
+        <textarea name="comment" id="comment" rows="5" cols="50"></textarea>
     
         <input type="hidden" id="unique-restaurant-id" name="unique_restaurant_id" value="{{ restaurant.unique_restaurant_id }}">
-        <div class="col-12">   
-            <button type="submit" class="btn btn-primary">Update Review</button>
-        </div>
+          <button type="submit" class="btn btn-danger">Update Review</button>
     </form>
 </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
 <script src="/static/js/updateRatings.js">
 </script>
