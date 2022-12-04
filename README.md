@@ -1,4 +1,4 @@
-![Logo] (/static/css/logo.JPG)
+![Logo](/static/css/logo.JPG)
 By Sahar Mehri | sahar.mehri.ca@gmail.com | [Watch the demo!](https://www.youtube.com/watch?v=lUfTB5bF_xg)
 
 GIF of app (GIF)
@@ -51,7 +51,7 @@ Previously a pre-Physician Assistant candidate, I was initially planning on purs
 
 Aside from coding and healthcare, in my free time I love to travel, shop, eat, and sing Afghan songs!
 
-Connect with [Sahar Mehri] (https://www.linkedin.com/in/saharmehri/) on Linkedin! 
+Connect with [Sahar Mehri](https://www.linkedin.com/in/saharmehri/) on Linkedin! 
 
 #Install
 ##Running My Halal Finder
