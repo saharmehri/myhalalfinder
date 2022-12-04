@@ -1,4 +1,4 @@
-![Logo](/Users/_rahas/src/project/static/css/logo.png)
+![Logo](/static/css/logo.png)
 By Sahar Mehri | sahar.mehri.ca@gmail.com | [Watch the demo!](https://www.youtube.com/watch?v=lUfTB5bF_xg)
 
 GIF of app (GIF)
