@@ -1,15 +1,16 @@
-![Logo](static/css/logo.jpg)
+![Logo](static/css/logo.jpg)<br>
 By Sahar Mehri | sahar.mehri.ca@gmail.com | [Watch the demo!](https://www.youtube.com/watch?v=lUfTB5bF_xg)
 
 ![Homepage](/static/css/homepage.png)
 
-<!-- Table of Contents 
-List all of the headings 
-Tech Stack 
-About 
-Features
-Data Model
-Looking Ahead -->
+# Table of Contents 
+- [Tech Stack](https://github.com/saharmehri/myhalalfinder#tech-stack) 
+- [About](https://github.com/saharmehri/myhalalfinder#about)
+- [Features](https://github.com/saharmehri/myhalalfinder#features)
+- Data Model
+- Looking Ahead
+- Meet the Developer 
+- Install
 
 # Tech Stack 
 - **Frontend**: JavaScript | jQuery | HTML5 | CSS | Bootstrap
@@ -21,7 +22,7 @@ Looking Ahead -->
 Do you also struggle finding halal restaurants? My Halal Finder is a halal restaurant search engine created to make the hunt for halal restaurants easy, concise, and in one location. Focusing on user experience, My Halal Finder filters search results based on cuisine, location and radius. Users also have the option to save restaurants and leave a rating to help out other fellow halal eaters! 
 
 # Features
-##Login and Registration 
+## Login and Registration 
 The user has the option to create an account to favorite restaurants for future reference and to leave a rating. I used SQL and postgreSQL to create users, then SQLAlchemy to query for each user to make sure there are no existing users. 
 
 ![LoginGIF](static/css/Login-GIF.gif)
@@ -29,14 +30,22 @@ The user has the option to create an account to favorite restaurants for future 
 ## Search Halal Foods
 To search for halal restaurants, I used the Yelp API with a “halal” default category to ensure only the return of halal restaurants. Users are required to indicate the cuisine, location and distance which I used to filter the rest of the content. 
 
+![SearchHalalFood](/static/css/Search-halal-food.gif)
+
 ## Favorite A Restaurant
 After logging in, a user can also favorite a restaurant for future reference. I used the Yelp API and Yelp business ID to create favorites for each favorite restaurant and displayed them as cards using Jinja. Then I used a query to ensure the restaurant is not a repeat add to favorites. 
+
+![Favorites](/static/css/Favorites.gif)
 
 ## Leave Rating
 Logged in users also have the ability to leave a rating for a restaurant. The user fills out the form, creating a rating. Using SQLAlchemy, I filter through all user ratings for the specific restaurant to ensure there are no duplicates. I also used Jinja to display the average ratings of each restaurant in a star format. 
 
+![Rating](/static/css/Rating.gif)
+
 ## Update Rating
 Finally, a user can update a restaurant rating. Here I used an event listener to create an AJAX call. When a user clicks the “update review” button, it triggers a modal popup and the user can update the review without refreshing the page.  
+
+![UpdateRating](/static/css/Update-rating.gif)
 
 # Data Model
 ![DataModel](/static/css/data-model.jpg)
