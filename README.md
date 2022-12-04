@@ -7,10 +7,10 @@ By Sahar Mehri | sahar.mehri.ca@gmail.com | [Watch the demo!](https://www.youtub
 - [Tech Stack](https://github.com/saharmehri/myhalalfinder#tech-stack) 
 - [About](https://github.com/saharmehri/myhalalfinder#about)
 - [Features](https://github.com/saharmehri/myhalalfinder#features)
-- Data Model
-- Looking Ahead
-- Meet the Developer 
-- Install
+- [Data Model](https://github.com/saharmehri/myhalalfinder#data-model)
+- [Looking Ahead](https://github.com/saharmehri/myhalalfinder#looking-ahead)
+- [Meet the Developer](https://github.com/saharmehri/myhalalfinder#meet-the-developer)
+- [Install](https://github.com/saharmehri/myhalalfinder#install)
 
 # Tech Stack 
 - **Frontend**: JavaScript | jQuery | HTML5 | CSS | Bootstrap
