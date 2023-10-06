@@ -74,8 +74,9 @@ source env/bin/activate
 
 3. Install dependencies:
 `pip3 install -r requirements.txt`
+`pip3 install requests`
 
-4. Create environmental variables to hold your API keys in a secrets.sh file. You'll need to create your own Yelp API key:
+5. Create environmental variables to hold your API keys in a secrets.sh file. You'll need to create your own Yelp API key:
 ```
 export YELP_CLIENT_ID="after creating an account on the Yelp developer website, you'll be given a client id, paste that here"
 export YELP_KEY="you'll also be given a Yelp key, paste that here for safe keeps"
