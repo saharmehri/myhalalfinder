@@ -11,7 +11,7 @@ import functools
 from urllib.parse import quote
 
 app = Flask(__name__)
-app.secret_key = os.environ['RANDOM_SECRET_KEY']
+app.secret_key = os.environ['RANDOM_SECRET_KEY'] #DONT FORGET TO RUN source 'secrets.sh' in the terminal to activate the secret key
 app.jinja_env.undefined = StrictUndefined
 
 # This configuration option makes the Flask interactive debugger
