@@ -24,7 +24,7 @@ API_KEY = os.environ['YELP_KEY']
 # *********************************************************************
 
 # Homepage
-@app.route('/homepage')
+@app.route('/')
 def homepage():
     """View homepage"""
 
@@ -282,7 +282,7 @@ def user_login():
             # flash message 'logged in'
             flash("Success! You are now logged in.", "success")
             # redirect to user profile
-            return redirect('/homepage')
+            return redirect('/')
         else: 
             flash("The password is incorrect. Please try again.", "error")
             return redirect('/loginpage')
@@ -302,7 +302,7 @@ def logging_out():
         flash("You have been logged out succesfully!", "success")
         session.pop('user_email')
     
-    return redirect('/homepage')
+    return redirect('/')
 
 
 
